@@ -15,9 +15,10 @@ retrycnt = 3
 timeout = 3600
 
 # 数据库连接 & 全局扫描参数
-global_dbcoon = 'mysql+mysqldb://celery:celery1@3Wscan@42.62.52.62:443/wscan'
+global_dbcoon = 'mysql+mysqldb://root:123456@127.0.0.1/3Wscan'
 # global_dbcoon = 'mysql+mysqldb://用户名:密码@数据库服务器IP:数据库端口/数据库名称'
-global_options = '-sT -P0 -sV -O --script=banner -p T:21-25,80-89,110,143,443,513,873,1080,1433,1521,1158,3306-3308,3389,3690,5900,6379,7001,8000-8090,9000,9418,27017-27019,50060,111,11211,2049'
+global_options = '-sT -P0 -sV -O --script=banner -p T:21-25,2233,3306'
+#global_options = '-sT -P0 -sV -O --script=banner -p T:21-25,80-89,110,143,443,513,873,1080,1433,1521,1158,3306-3308,3389,3690,5900,6379,7001,8000-8090,9000,9418,27017-27019,50060,111,11211,2049'
 
 # 处理端口状态
 global_log_states = ['open'] # open, filtered, closed, unfiltered
@@ -70,9 +71,7 @@ def parse_nmap_report(nmap_stdout, taskid=None):
 		# 处理结果并写入后台数据库
 		nmap_report = NmapParser.parse(nmap_stdout)
 
-		# 声明后台对应的ORM数据库处理模型
-		my_services_backend = BackendPluginFactory.create(plugin_name='backend_service', url=global_dbcoon, echo=False, encoding='utf-8', pool_timeout=3600)
-		my_hosts_backend = BackendPluginFactory.create(plugin_name='backend_host', url=global_dbcoon, echo=False, encoding='utf-8', pool_timeout=3600)
+		print "\n\nResult:\n\n"
 
 		# 开始处理扫描结果
 		for host in nmap_report.hosts:
@@ -87,11 +86,8 @@ def parse_nmap_report(nmap_stdout, taskid=None):
 					serv.endtime = host.endtime
 
 					if serv.state in global_log_states:
-						serv.save(my_services_backend)
-
-				host.save(my_hosts_backend)
-
-		return '* Scan finished'
+							print host,serv
+					
 
 	except Exception, e:
 		# 处理报表出错，返回错误结果
