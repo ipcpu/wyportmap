@@ -28,7 +28,10 @@ forked  from https://github.com/ring04h/wyportmap
     python wyportmap.py 42.62.78.70-100
     
 #### Example样例
-   `
+
+
+
+   ```
     [root@s102.ipcpu.com wyportmap]#./wyportmap.py 10.1.1.4-6 id0
 --------------------------------------------------
 * Starting id:(id0) [10.1.1.4-6] portmap scan
@@ -52,4 +55,6 @@ NmapHost: [10.1.1.5 (a5.ipcpu.idc) - up] NmapService: [open 2233/tcp ssh (produc
 NmapHost: [10.1.1.6 (a6.ipcpu.idc) - up] NmapService: [open 2233/tcp ssh (product: OpenSSH version: 5.3 extrainfo: protocol 2.0)]
 NmapHost: [10.1.1.6 (a6.ipcpu.idc) - up] NmapService: [open 3306/tcp mysql (product: MySQL version: 5.5.41-log)]
 None
-    `
+    ```
+    
+    
